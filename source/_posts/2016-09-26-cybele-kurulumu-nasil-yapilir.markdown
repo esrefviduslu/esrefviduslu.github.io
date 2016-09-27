@@ -14,6 +14,7 @@ Kurulum aşamasından önce gerekli olan en düşük versiyon tipleri;
 > Rails ~> 4.2 'dir.
 
 Eğer daha düşük bir versiyon kullanmaktaysanız öncelikle güncelleme yapmalısınız.
+<!-- more -->
 
 Öncelikle "Cybele" gem imizi indirmekle başlayalım.
 
