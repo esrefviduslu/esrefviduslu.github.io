@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | Viduslu]]></title>
   <link href="http://esrefv.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://esrefv.github.io/"/>
-  <updated>2016-09-26T11:14:02+03:00</updated>
+  <updated>2016-09-27T14:59:24+03:00</updated>
   <id>http://esrefv.github.io/</id>
   <author>
     <name><![CDATA[E. VIDUSLU]]></name>
@@ -27,6 +27,9 @@
 <p>Rails ~> 4.2 &lsquo;dir.</p></blockquote>
 
 <p>Eğer daha düşük bir versiyon kullanmaktaysanız öncelikle güncelleme yapmalısınız.</p>
+
+<!-- more -->
+
 
 <p>Öncelikle &ldquo;Cybele&rdquo; gem imizi indirmekle başlayalım.</p>
 
