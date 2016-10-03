@@ -4,7 +4,7 @@
   <title><![CDATA[Category: github | Viduslu]]></title>
   <link href="http://esrefv.github.io/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://esrefv.github.io/"/>
-  <updated>2016-10-03T10:40:24+03:00</updated>
+  <updated>2016-10-03T17:14:11+03:00</updated>
   <id>http://esrefv.github.io/</id>
   <author>
     <name><![CDATA[E. VIDUSLU]]></name>
@@ -60,7 +60,7 @@ Enter a title for your post: Deneme
 <pre><code class="bash">$ cd source/_posts 
 </code></pre>
 
-<p>yazarak postlarımıza ulaşıyoruz. İster subl, atom, rubymine vb. araçlarla açarak yönetebiliriz postumuzu.</p>
+<p>yazarak postlarımıza ulaşıyoruz. Subl, atom, rubymine vb. araçlarla açarak yönetebiliriz postumuzu.</p>
 
 <pre><code class="bash">---
 layout: post
@@ -97,7 +97,7 @@ Configuration file: /home/esref/Documents/octopress/_config.yml
 
 <p>Oluşturduğumuz sitemizi local olarak görüntüleyebileceğiz.</p>
 
-<pre><code class="bash">$bundle exec rake preview
+<pre><code class="bash">$ bundle exec rake preview
 Starting to watch source with Jekyll and Compass. Starting Rack on port 4000
 Configuration file: /home/esref/Documents/octopress/_config.yml
 &gt;&gt;&gt; Compass is watching for changes. Press Ctrl-C to Stop.
@@ -118,7 +118,7 @@ Configuration file: /home/esref/Documents/octopress/_config.yml
 
 <p><strong>Octopress'in Yapılandırılması(Configuring)</strong></p>
 
-<p>Site adı, açıklama vb. bir çok değişikliği ve ayarları yapabileceğiniz dosya &ldquo;_config.yml&rdquo; dosyasıdır. Buna dosyaya da subl, atom vb. şekilde açtığınız klasörlerin kök dizininden ulaşabilirsiniz.</p>
+<p>Site adı, açıklama vb. bir çok değişikliği ve ayarları yapabileceğiniz dosya &ldquo;_config.yml&rdquo; dosyasıdır. Bu dosyaya da subl, atom vb. şekilde açtığınız klasörlerin kök dizininden ulaşabilirsiniz.</p>
 
 <pre><code class="bash"># ----------------------- #
 #      Main Configs       #
@@ -132,7 +132,8 @@ simple_search: https://www.google.com/search
 description:
 </code></pre>
 
-<p>Dosyaya ulaştığımızda öncelikle değiştirmemiz gereken url: kısmıdır çünkü repomuza hangi adı verdiysek o şekilde olmalıdır.</p>
+<p>Dosyaya ulaştığımızda öncelikle değiştirmemiz gereken url: kısmıdır çünkü repository mize hangi adı verdiysek o şekilde olmalıdır. Nasıl
+repository oluşturcağımızıda aşağıda anlatıyorum.</p>
 
 <p><strong>Sitemizi Github'a Deploy Etme</strong></p>
 
