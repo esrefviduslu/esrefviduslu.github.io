@@ -51,7 +51,7 @@ Bu ilk postumuz source klasörünün altında bulunan _posts klasörünün için
 $ cd source/_posts 
 ```
 
-yazarak postlarımıza ulaşıyoruz. İster subl, atom, rubymine vb. araçlarla açarak yönetebiliriz postumuzu.
+yazarak postlarımıza ulaşıyoruz. Subl, atom, rubymine vb. araçlarla açarak yönetebiliriz postumuzu.
 
 ```bash
 ---
@@ -91,7 +91,7 @@ Configuration file: /home/esref/Documents/octopress/_config.yml
 Oluşturduğumuz sitemizi local olarak görüntüleyebileceğiz. 
 
 ```bash
-$bundle exec rake preview
+$ bundle exec rake preview
 Starting to watch source with Jekyll and Compass. Starting Rack on port 4000
 Configuration file: /home/esref/Documents/octopress/_config.yml
 >>> Compass is watching for changes. Press Ctrl-C to Stop.
@@ -112,7 +112,7 @@ Configuration file: /home/esref/Documents/octopress/_config.yml
 
 **Octopress'in Yapılandırılması(Configuring)**
 
-Site adı, açıklama vb. bir çok değişikliği ve ayarları yapabileceğiniz dosya "_config.yml" dosyasıdır. Buna dosyaya da subl, atom vb. şekilde açtığınız klasörlerin kök dizininden ulaşabilirsiniz.
+Site adı, açıklama vb. bir çok değişikliği ve ayarları yapabileceğiniz dosya "_config.yml" dosyasıdır. Bu dosyaya da subl, atom vb. şekilde açtığınız klasörlerin kök dizininden ulaşabilirsiniz.
 
 ```bash
 # ----------------------- #
@@ -126,7 +126,8 @@ author: Your Name
 simple_search: https://www.google.com/search
 description:
 ```
-Dosyaya ulaştığımızda öncelikle değiştirmemiz gereken url: kısmıdır çünkü repomuza hangi adı verdiysek o şekilde olmalıdır.
+Dosyaya ulaştığımızda öncelikle değiştirmemiz gereken url: kısmıdır çünkü repository mize hangi adı verdiysek o şekilde olmalıdır. Nasıl
+repository oluşturcağımızıda aşağıda anlatıyorum.
 
 **Sitemizi Github'a Deploy Etme**
 
