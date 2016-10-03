@@ -1,0 +1,362 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Octopress Kurulumu Nasıl Yapılır ve Github pages Deploy Edilir? - Viduslu</title>
+    <meta name="author" content="E. VIDUSLU">
+    
+	<meta name="description" content="Octopress statik bir site yönetimi sağlayan blog framework üdür. Terminalden yönettiğimiz blogumuzu Github pages deploy ederek aktif hale getirceğiz &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Viduslu" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        E. VIDUSLU
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Octopress Kurulumu Nasıl Yapılır Ve Github Pages Deploy Edilir?</h2>
+	<div class="entry-content"><p>Octopress statik bir site yönetimi sağlayan blog framework üdür. Terminalden yönettiğimiz blogumuzu Github pages deploy ederek aktif hale getirceğiz yazımda. Öncelikle &ldquo;Octopress&rdquo; i klonlamamız gerekiyor.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<p><strong>Rake install</strong></p>
+
+<p>Sırada ise default tema ve postlarımız için gerekli olan klasörleri bize sağlayacak olan kodu çalıştıracağız.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Eğer aşağıdaki gibi bir hata alırsak;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake aborted!
+</span><span class='line'>Gem::LoadError: ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&ldquo;rake install&rdquo; örneğindeki gibi &ldquo;rake&rdquo;  yazarak kullanacağımız bütün işlemlerin başına &ldquo;bundle exec&rdquo; yazmamız gerekecektir.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>İlk Postumuzu oluşturalım</strong></p>
+
+<p>Post oluşturmak için aşağıdaki kodu yazıyoruz.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake new_post
+</span><span class='line'>Enter a title <span class="k">for</span> your post: Deneme
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Postumuzun adı için birşeyler yazıyoruz ve ilk postumuzu oluşturmuş oluyoruz. Ben &ldquo;Deneme&rdquo; adında bir post oluşturdum.</p>
+
+<p>Bu ilk postumuz source klasörünün altında bulunan _posts klasörünün içinde bulunuyor ve <a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a> syntax ile yazılması gerekiyor.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd source</span>/_posts
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>yazarak postlarımıza ulaşıyoruz. İster subl, atom, rubymine vb. araçlarla açarak yönetebiliriz postumuzu.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>---
+</span><span class='line'>layout: post
+</span><span class='line'>title: <span class="s2">&quot;Deneme&quot;</span>
+</span><span class='line'>date: 2016-10-03 09:26:18 +0300
+</span><span class='line'>comments: <span class="nb">true</span>
+</span><span class='line'>categories:
+</span><span class='line'>---
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Karşımıza bu şekilde başlayan bir sayfa açılacaktır. Bunun altına Markdown syntax ile yazdığımız yazımızı ekleyerek paylaşabiliyor olacağız.</p>
+
+<p>Kategori aşamasını da aşağıda şekilde yazarak oluşturabiliyoruz.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>categories: <span class="o">[</span>octopress, github, github pages<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Sitemizi &ldquo;Generate&rdquo; Edelim</strong></p>
+
+<p>Yaptığımız değişikliklerden sonra <em>generate</em> komutunu çalıştırmalıyız ki değişiklikler oluşturulsun.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake generate
+</span><span class='line'><span class="c">## Generating Site with Jekyll</span>
+</span><span class='line'>directory <span class="nb">source</span>/stylesheets
+</span><span class='line'>    write <span class="nb">source</span>/stylesheets/screen.css
+</span><span class='line'>Configuration file: /home/esref/Documents/octopress/_config.yml
+</span><span class='line'>            Source: <span class="nb">source</span>
+</span><span class='line'><span class="nb">       </span>Destination: public
+</span><span class='line'>      Generating...
+</span><span class='line'>                    <span class="k">done</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Sitemizi Önizleme Şeklinde Görüntüleyelim</strong></p>
+
+<p>Oluşturduğumuz sitemizi local olarak görüntüleyebileceğiz.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$bundle</span> <span class="nb">exec </span>rake preview
+</span><span class='line'>Starting to watch <span class="nb">source </span>with Jekyll and Compass. Starting Rack on port 4000
+</span><span class='line'>Configuration file: /home/esref/Documents/octopress/_config.yml
+</span><span class='line'>&gt;&gt;&gt; Compass is watching <span class="k">for</span> changes. Press Ctrl-C to Stop.
+</span><span class='line'>            Source: <span class="nb">source</span>
+</span><span class='line'><span class="nb">       </span>Destination: public
+</span><span class='line'>      Generating...
+</span><span class='line'><span class="o">[</span>2016-10-03 09:45:32<span class="o">]</span> INFO  WEBrick 1.3.1
+</span><span class='line'><span class="o">[</span>2016-10-03 09:45:32<span class="o">]</span> INFO  ruby 2.3.0 <span class="o">(</span>2015-12-25<span class="o">)</span> <span class="o">[</span>x86_64-linux<span class="o">]</span>
+</span><span class='line'><span class="o">[</span>2016-10-03 09:45:32<span class="o">]</span> INFO  WEBrick::HTTPServer#start: <span class="nv">pid</span><span class="o">=</span><span class="m">20926</span> <span class="nv">port</span><span class="o">=</span>4000
+</span><span class='line'>                    <span class="k">done</span>.
+</span><span class='line'> Auto-regeneration: enabled <span class="k">for</span> <span class="s1">&#39;source&#39;</span>
+</span><span class='line'>    write public/stylesheets/screen.css
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://localhost:4000/">http://localhost:4000/</a> sayfasında sitemizi görütüleyebiliriz. Sitemiz aşağıdaki şekildi görüntülene bilecektir.</p>
+
+<p><img src="http://i.hizliresim.com/yV9Eoy.png" alt="Örnek Resim" /></p>
+
+<p><strong>Octopress'in Yapılandırılması(Configuring)</strong></p>
+
+<p>Site adı, açıklama vb. bir çok değişikliği ve ayarları yapabileceğiniz dosya &ldquo;_config.yml&rdquo; dosyasıdır. Buna dosyaya da subl, atom vb. şekilde açtığınız klasörlerin kök dizininden ulaşabilirsiniz.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># ----------------------- #</span>
+</span><span class='line'><span class="c">#      Main Configs       #</span>
+</span><span class='line'><span class="c"># ----------------------- #</span>
+</span><span class='line'>
+</span><span class='line'>url: http://deneme.github.io
+</span><span class='line'>title: My Octopress Blog
+</span><span class='line'>subtitle: A blogging framework <span class="k">for</span> hackers.
+</span><span class='line'>author: Your Name
+</span><span class='line'>simple_search: https://www.google.com/search
+</span><span class='line'>description:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dosyaya ulaştığımızda öncelikle değiştirmemiz gereken url: kısmıdır çünkü repomuza hangi adı verdiysek o şekilde olmalıdır.</p>
+
+<p><strong>Sitemizi Github'a Deploy Etme</strong></p>
+
+<p>Yeni bir github repository oluşturmalıyız. Kişisel blogunuzu oluşturuyorsanız benim gibi aşağıdaki şekilde repo ismi verebilirsiniz.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>esrefv.github.io
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sonrasında &ldquo;rake setup_github_pages&rdquo; çalıştırıyoruz,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake setup_github_pages
+</span><span class='line'>Enter the <span class="nb">read</span>/write url <span class="k">for</span> your repository
+</span><span class='line'><span class="o">(</span>For example, <span class="s1">&#39;git@github.com:your_username/your_username.github.io.git)</span>
+</span><span class='line'><span class="s1">           or &#39;</span>https://github.com/your_username/your_username.github.io<span class="err">&#39;</span><span class="o">)</span>
+</span><span class='line'>Repository url:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Örnek olarak belirttiği şekilde &ldquo;git@github.com:username/username.github.com.git&rdquo; kendi repo umuzu yazıyoruz.</p>
+
+<p>Son olarak aşağıdaki kodları sırasıyla çalıştırarak blogumuzu Github'a deploy işlemimizi bitirmiş oluyoruz.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake generate
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;First deploy to github.&quot;</span>
+</span><span class='line'><span class="nv">$ </span>git push origin <span class="nb">source</span>
+</span><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okuduğunuz için teşekkür ederim.</p>
+
+<p>Kaynak Siteler;</p>
+
+<p><a href="http://octopress.org/">http://octopress.org/</a>
+<a href="https://daringfireball.net/projects/markdown/syntax">https://daringfireball.net/projects/markdown/syntax</a></p>
+</div>
+
+<div class="meta">
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2016
+
+    E. VIDUSLU
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>
