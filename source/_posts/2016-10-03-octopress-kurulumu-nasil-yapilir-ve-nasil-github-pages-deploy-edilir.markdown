@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Octopress Kurulumu Nasıl Yapılır ve Github pages Deploy Edilir?"
+title: "Octopress Kurulumu Nasıl Yapılır ve Nasıl Github Pages Deploy Edilir?"
 date: 2016-10-03 10:32:01 +0300
 comments: true
 categories: [octopress, github, github pages]
