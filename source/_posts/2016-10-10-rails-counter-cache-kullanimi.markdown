@@ -10,6 +10,8 @@ Bugünkü yazımda Rails'ta counter_cache kullanımından bahsedeceğim. Önceli
 
 Kendi yaptığım proje üzerinden örnek vermem gerekirse. User ve Answer adında 2 modelim var. counter_cache kullanabilmemiz için 2 modelimizin arasında has_many, belogns_to ilişkisi olması gereklidir.
 
+<!-- more -->
+
 User modelim;
 
     class User < ActiveRecord::Base
