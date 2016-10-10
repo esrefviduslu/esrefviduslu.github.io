@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://esrefv.github.io/blog/2016/10/10/rails-counter-cache-kullanimi/</loc>
+<lastmod>2016-10-10T22:47:50+03:00</lastmod>
+</url>
+<url>
 <loc>http://esrefv.github.io/blog/2016/10/03/octopress-kurulumu-nasil-yapilir-ve-nasil-github-pages-deploy-edilir/</loc>
 <lastmod>2016-10-03T10:32:01+03:00</lastmod>
 </url>
@@ -31,5 +35,8 @@
 </url>
 <url>
 <loc>http://esrefv.github.io/blog/categories/github-pages/</loc>
+</url>
+<url>
+<loc>http://esrefv.github.io/blog/categories/counter-cache/</loc>
 </url>
 </urlset>

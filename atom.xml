@@ -4,7 +4,7 @@
   <title><![CDATA[Viduslu]]></title>
   <link href="http://esrefv.github.io/atom.xml" rel="self"/>
   <link href="http://esrefv.github.io/"/>
-  <updated>2016-10-03T17:14:11+03:00</updated>
+  <updated>2016-10-10T22:49:14+03:00</updated>
   <id>http://esrefv.github.io/</id>
   <author>
     <name><![CDATA[E. VIDUSLU]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails counter_cache Kullanımı]]></title>
+    <link href="http://esrefv.github.io/blog/2016/10/10/rails-counter-cache-kullanimi/"/>
+    <updated>2016-10-10T22:47:50+03:00</updated>
+    <id>http://esrefv.github.io/blog/2016/10/10/rails-counter-cache-kullanimi</id>
+    <content type="html"><![CDATA[<p>Bugünkü yazımda Rails'ta counter_cache kullanımından bahsedeceğim. Öncelikle belli bir sayısal değeri kullanmamıza ihtiyaç varsa her seferinde count ile saydırmak yerine bunu counter _cache yardımı ile tutturabileceğiz.</p>
+
+<p>Kendi yaptığım proje üzerinden örnek vermem gerekirse. User ve Answer adında 2 modelim var. counter_cache kullanabilmemiz için 2 modelimizin arasında has_many, belogns_to ilişkisi olması gereklidir.</p>
+
+<p>User modelim;</p>
+
+<pre><code>class User &lt; ActiveRecord::Base
+    has_many :answers
+end
+</code></pre>
+
+<p>Answer modelim;</p>
+
+<pre><code>class Answer &lt; ActiveRecord::Base
+    belongs_to :user
+end
+</code></pre>
+
+<p>şeklindedir.</p>
+
+<p>Benim User'larımın birden çok Answer'ı olabilir. Answer içerindede User'ın online olup olmama durumunu, online offline olduğu saati ve buna benzer cevapları tutmaktayım.</p>
+
+<p>Ben User'ıma ait cevapların sayını öğrenmem için</p>
+
+<pre><code>@user.answers.count
+@user.answers.size
+@user.answer.lenght 
+</code></pre>
+
+<p>şeklinde veritabanını yoracak COUNT(*) sorguları yerine daha efektif bir çözüm olan counter_cache kullanmam daha doğru olacaktır.</p>
+
+<p>Öncelikle Answer modelimizdeki user'ı,</p>
+
+<pre><code>class Answer &lt; ActiveRecord::Base
+    belongs_to :user, counter_cache: true
+end
+</code></pre>
+
+<p>şeklinde counter_cache: true yapıyoruz.</p>
+
+<p>Burada belongs_to modelimeze counter_cache: true demiş olmamıza rağmen, User modelimize yeni bir alan eklemek için migration oluşturmamız gerekiyor.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails g migration add_answers_sount_to_users
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Benim örneğimde görebileceğiniz gibi User modelimize answers_count eklememiz gerekiyor.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AddAnswersCountToUsers</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">add_column</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:answers_count</span><span class="p">,</span> <span class="ss">:integer</span><span class="p">,</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Daha sonra yeni oluşturduğumuz migration ımızı migrate etmeliyiz.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake db:migrate
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ve tamamdır. Her oluşacak yeni Answer'ımız hangi User'ımıza ait ise onun değerini 1 arttırıyor olacaktır. Bizde veritabanımızı yoracak COUNT(*) işlemi yerine.</p>
+
+<pre><code>@user.answers_count
+</code></pre>
+
+<p>yazarak, model tarafından birek ulaşabileceğiz.</p>
+
+<p>Okuduğunuz için teşekkürler</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress Kurulumu Nasıl Yapılır ve Nasıl Github Pages Deploy Edilir?]]></title>

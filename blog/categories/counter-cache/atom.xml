@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: counter_cache | Viduslu]]></title>
+  <link href="http://esrefv.github.io/blog/categories/counter-cache/atom.xml" rel="self"/>
+  <link href="http://esrefv.github.io/"/>
+  <updated>2016-10-10T22:49:14+03:00</updated>
+  <id>http://esrefv.github.io/</id>
+  <author>
+    <name><![CDATA[E. VIDUSLU]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rails counter_cache Kullanımı]]></title>
+    <link href="http://esrefv.github.io/blog/2016/10/10/rails-counter-cache-kullanimi/"/>
+    <updated>2016-10-10T22:47:50+03:00</updated>
+    <id>http://esrefv.github.io/blog/2016/10/10/rails-counter-cache-kullanimi</id>
+    <content type="html"><![CDATA[<p>Bugünkü yazımda Rails'ta counter_cache kullanımından bahsedeceğim. Öncelikle belli bir sayısal değeri kullanmamıza ihtiyaç varsa her seferinde count ile saydırmak yerine bunu counter _cache yardımı ile tutturabileceğiz.</p>
+
+<p>Kendi yaptığım proje üzerinden örnek vermem gerekirse. User ve Answer adında 2 modelim var. counter_cache kullanabilmemiz için 2 modelimizin arasında has_many, belogns_to ilişkisi olması gereklidir.</p>
+
+<p>User modelim;</p>
+
+<pre><code>class User &lt; ActiveRecord::Base
+    has_many :answers
+end
+</code></pre>
+
+<p>Answer modelim;</p>
+
+<pre><code>class Answer &lt; ActiveRecord::Base
+    belongs_to :user
+end
+</code></pre>
+
+<p>şeklindedir.</p>
+
+<p>Benim User'larımın birden çok Answer'ı olabilir. Answer içerindede User'ın online olup olmama durumunu, online offline olduğu saati ve buna benzer cevapları tutmaktayım.</p>
+
+<p>Ben User'ıma ait cevapların sayını öğrenmem için</p>
+
+<pre><code>@user.answers.count
+@user.answers.size
+@user.answer.lenght 
+</code></pre>
+
+<p>şeklinde veritabanını yoracak COUNT(*) sorguları yerine daha efektif bir çözüm olan counter_cache kullanmam daha doğru olacaktır.</p>
+
+<p>Öncelikle Answer modelimizdeki user'ı,</p>
+
+<pre><code>class Answer &lt; ActiveRecord::Base
+    belongs_to :user, counter_cache: true
+end
+</code></pre>
+
+<p>şeklinde counter_cache: true yapıyoruz.</p>
+
+<p>Burada belongs_to modelimeze counter_cache: true demiş olmamıza rağmen, User modelimize yeni bir alan eklemek için migration oluşturmamız gerekiyor.</p>
+
+<pre><code class="bash">$ rails g migration add_answers_sount_to_users    
+</code></pre>
+
+<p>Benim örneğimde görebileceğiniz gibi User modelimize answers_count eklememiz gerekiyor.</p>
+
+<pre><code class="ruby">class AddAnswersCountToUsers &lt; ActiveRecord::Migration
+  def change
+    add_column :users, :answers_count, :integer, :default =&gt; 0
+  end
+end
+</code></pre>
+
+<p>Daha sonra yeni oluşturduğumuz migration ımızı migrate etmeliyiz.
+<code>bash
+$ bundle exec rake db:migrate   
+</code></p>
+
+<p>Ve tamamdır. Her oluşacak yeni Answer'ımız hangi User'ımıza ait ise onun değerini 1 arttırıyor olacaktır. Bizde veritabanımızı yoracak COUNT(*) işlemi yerine.</p>
+
+<pre><code>@user.answers_count
+</code></pre>
+
+<p>yazarak, model tarafından birek ulaşabileceğiz.</p>
+
+<p>Okuduğunuz için teşekkürler</p>
+]]></content>
+  </entry>
+  
+</feed>
