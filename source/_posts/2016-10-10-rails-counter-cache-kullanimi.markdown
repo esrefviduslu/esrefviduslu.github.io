@@ -6,9 +6,9 @@ comments: true
 categories: [rails, ruby, counter_cache]
 ---
 
-Bugünkü yazımda Rails'ta counter_cache kullanımından bahsedeceğim. Öncelikle belli bir sayısal değeri kullanmamıza ihtiyaç varsa her seferinde count ile saydırmak yerine bunu counter _cache yardımı ile tutturabileceğiz. 
+Bugünkü yazımda Rails'ta counter_cache kullanımından bahsedeceğim. Öncelikle belli bir sayısal değeri kullanmamıza ihtiyaç varsa her seferinde count ile saydırmak yerine bunu counter_cache yardımı ile tutturabileceğiz. 
 
-Kendi yaptığım proje üzerinden örnek vermem gerekirse. User ve Answer adında 2 modelim var. counter_cache kullanabilmemiz için 2 modelimizin arasında has_many, belogns_to ilişkisi olması gereklidir.
+Kendi yaptığım proje üzerinden örnek vermem gerekirse. User ve Answer adında 2 modelim var. counter_cache kullanabilmemiz için 2 modelimizin arasında has_many, belongs_to ilişkisi olması gereklidir.
 
 <!-- more -->
 
@@ -28,7 +28,7 @@ Answer modelim;
 
 Benim User'larımın birden çok Answer'ı olabilir. Answer içerindede User'ın online olup olmama durumunu, online offline olduğu saati ve buna benzer cevapları tutmaktayım.
 
-Ben User'ıma ait cevapların sayını öğrenmem için 
+Benim User'ıma ait cevapların sayınsını öğrenmem için 
     
     @user.answers.count
     @user.answers.size
