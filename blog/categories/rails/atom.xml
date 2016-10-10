@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rails | Viduslu]]></title>
   <link href="http://esrefv.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://esrefv.github.io/"/>
-  <updated>2016-10-10T22:49:14+03:00</updated>
+  <updated>2016-10-10T22:50:49+03:00</updated>
   <id>http://esrefv.github.io/</id>
   <author>
     <name><![CDATA[E. VIDUSLU]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<p>Bugünkü yazımda Rails'ta counter_cache kullanımından bahsedeceğim. Öncelikle belli bir sayısal değeri kullanmamıza ihtiyaç varsa her seferinde count ile saydırmak yerine bunu counter _cache yardımı ile tutturabileceğiz.</p>
 
 <p>Kendi yaptığım proje üzerinden örnek vermem gerekirse. User ve Answer adında 2 modelim var. counter_cache kullanabilmemiz için 2 modelimizin arasında has_many, belogns_to ilişkisi olması gereklidir.</p>
+
+<!-- more -->
+
 
 <p>User modelim;</p>
 
