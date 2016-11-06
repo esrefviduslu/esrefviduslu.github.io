@@ -225,4 +225,6 @@ Bu kodda ilk döngüde öncelikle master branche geçiyoruz. Ve yeni remote umuz
 
 İkinci döngüde ise 'git remote remove' ile origin_two remoteumuzu kaldırıyoruz. Aslında kaldırmamızı gerektiren bir durum yok isterseniz kaldırmaya bilirsiniz. 
 
-Elimden geldiğince açıklamaları ile anlatmaya çalıştım. Yazı biraz fazla uzun oldu başlık gibi :D Okuduğunuz için teşekkürler.
+Elimden geldiğince açıklamaları ile anlatmaya çalıştım. Yazı biraz fazla uzun oldu başlık gibi :D Okuduğunuz için teşekkürler. 
+
+Tam koda [buradan](https://gist.github.com/esrefv/a624c50c190ed649034a3626d1056f76 "") ulaşabilirsiniz. 
