@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://esrefv.github.io/blog/2016/11/05/ruby-ile-github-bitbucket-arasinda-cift-yonlu-reposityory-aktarimi-yapan-script/</loc>
+<lastmod>2016-11-05T19:00:59+03:00</lastmod>
+</url>
+<url>
 <loc>http://esrefv.github.io/blog/2016/10/10/rails-counter-cache-kullanimi/</loc>
 <lastmod>2016-10-10T22:47:50+03:00</lastmod>
 </url>
@@ -38,5 +42,17 @@
 </url>
 <url>
 <loc>http://esrefv.github.io/blog/categories/counter-cache/</loc>
+</url>
+<url>
+<loc>http://esrefv.github.io/blog/categories/script/</loc>
+</url>
+<url>
+<loc>http://esrefv.github.io/blog/categories/ruby-script/</loc>
+</url>
+<url>
+<loc>http://esrefv.github.io/blog/categories/bitbucket/</loc>
+</url>
+<url>
+<loc>http://esrefv.github.io/blog/categories/repository/</loc>
 </url>
 </urlset>
