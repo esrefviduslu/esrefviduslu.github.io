@@ -4,7 +4,7 @@
   <title><![CDATA[Viduslu]]></title>
   <link href="http://esrefv.github.io/atom.xml" rel="self"/>
   <link href="http://esrefv.github.io/"/>
-  <updated>2016-11-06T18:56:14+03:00</updated>
+  <updated>2016-11-06T19:00:30+03:00</updated>
   <id>http://esrefv.github.io/</id>
   <author>
     <name><![CDATA[E. VIDUSLU]]></name>
@@ -345,6 +345,8 @@ fileschange = "example1"
 <p>İkinci döngüde ise &lsquo;git remote remove&rsquo; ile origin_two remoteumuzu kaldırıyoruz. Aslında kaldırmamızı gerektiren bir durum yok isterseniz kaldırmaya bilirsiniz.</p>
 
 <p>Elimden geldiğince açıklamaları ile anlatmaya çalıştım. Yazı biraz fazla uzun oldu başlık gibi :D Okuduğunuz için teşekkürler.</p>
+
+<p>Tam koda <a href="https://gist.github.com/esrefv/a624c50c190ed649034a3626d1056f76">buradan</a> ulaşabilirsiniz.</p>
 ]]></content>
   </entry>
   
