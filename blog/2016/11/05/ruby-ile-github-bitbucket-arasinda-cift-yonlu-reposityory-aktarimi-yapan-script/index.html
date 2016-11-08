@@ -80,14 +80,14 @@
     <div id="content" class="inner">
         <article class="post">
 	<h2 class="title">Ruby Ile Github-Bitbucket Arasında Çift Yönlü Repository Aktarımı Yapan Script</h2>
-	<div class="entry-content"><p>Öncelikle başlık biraz uzun oldu arkadaşlar kusura bakmayın :D İlk olarak benden Bitbucket üzerinde bulunan projelerinin Github'a aktarma işlemi için bir script yazmam istendiğinde nasıl yapacağım konusunda en ufak bir fikrim yoktu ve ruby, rials dünyasında çok yeniyim.</p>
+	<div class="entry-content"><p>Öncelikle başlık biraz uzun oldu arkadaşlar kusura bakmayın :D İlk olarak benden Bitbucket üzerinde bulunan projelerinin Github'a aktarma işlemi için bir script yazmam istendiğinde nasıl yapacağım konusunda en ufak bir fikrim yoktu ve ruby dünyasında çok yeniyim.</p>
 
 <!-- more -->
 
 
 <p>Sonrasında burada da yazağım gibi adım adım ilerleyerek mükemmel olmasada kullanılabilir bir script ortaya çıkartmaya çalıştım. Kodu bu yazıyı yazmadan önce bitirmiş olduğumdan elimden geldiğince iyileştirme yapmaya çalıştım fakat biraz daha temizlenip düzenlenebileceğine inanıyorum. Umarım işinizi görür.</p>
 
-<h1>Repolarımızın bir dosyaya clone edilmesi</h1>
+<h1>Var olan repositorylerimizin, taşınacak alandaki remoteların listelenmesi</h1>
 
 <p>directoryname adını verdiğim bir değişkende oluşturulacak olan klasörün adını tutacağım ve rubyde &lsquo;Dir&rsquo; sınıfını kullanacağız.</p>
 
@@ -97,25 +97,14 @@ Dir.mkdir(directoryname) unless File.exists?(directoryname)
 
 <p>Dir.mkdir sayesinde &ldquo;bitbucketproject&rdquo; adında klasörümüz oluşuyor. Ben ubuntu kulladığım için &lsquo;home&rsquo; klasörü altında oluşuyor.</p>
 
-<p>Klonlayacağımız repolarımızı bir repo_list adını verdiğimiz array içinde tutuyoruz.</p>
+<p>Klonlayacağımız repolarımızı ve taşıyacağımız alandaki repositorylere ait remotelar repo_remote_list adını verdiğimiz array içinde tutuyoruz.</p>
 
 <pre><code>repo_list = 
-["git clone git@github.com:github/example1.git",
-"git clone git@bitbucket.org:bitbucket/example2.git"]
+[["git clone git@github.com:github/example1.git", "git clone git@github.com:github/example1.git"],
+["git clone git@bitbucket.org:bitbucket/example2.git","git clone git@bitbucket.org:bitbucket/example2.git"]]
 </code></pre>
 
-<p>Örnek olarak verdiğim listede terminal üzerinde nasıl clone işlemi yapıyorsak o şekilde yazıyoruz taşımak istediğimiz repoları.</p>
-
-<p>Sonrasında &lsquo;directoryname&rsquo; adını verdiğimiz klasörün içerisine tüm repolarımızı klonlayacak kodu yazıyoruz.</p>
-
-<pre><code> repo_list.each do |repo|
-    Dir.chdir(directoryname) do
-        system repo 
-    end
-end
-</code></pre>
-
-<p>repo_list içerisindeki tüm repolar bir bir klonlanıyor.</p>
+<p>Örnek olarak verdiğim listede terminal üzerinde nasıl clone işlemi yapıyorsak o şekilde yazıyoruz taşımak istediğimiz repoları, taşıyacağımız alana ait remoteları da ikili liste şeklinde hangi repomuzu hangi &lsquo;remote&rsquo; a taşımak istiyorsak yanına belirtiyoruz.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -129,51 +118,33 @@ end
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">directoryname</span> <span class="o">=</span> <span class="s2">&quot;bitbucketproject&quot;</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">directoryname</span> <span class="o">=</span> <span class="s2">&quot;bitbucketproject&quot;</span>
 </span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">directoryname</span><span class="p">)</span> <span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="n">directoryname</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="n">repo_list</span> <span class="o">=</span>
-</span><span class='line'><span class="o">[</span><span class="s2">&quot;git clone git@github.com:github/example1.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git clone git@bitbucket.org:bitbucket/example2.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git clone git@bitbucket.org:bitbucket/example3.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git clone git@github.com:github/example4.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git clone git@bitbucket.org:bitbucket/example5.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git clone git@github.com:github/example6.git&quot;</span>
+</span><span class='line'><span class="n">repo_remote_list</span> <span class="o">=</span>
+</span><span class='line'><span class="o">[</span>
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;git clone git@github.com:github/example1.git&quot;</span><span class="p">,</span> <span class="s2">&quot;git remote add origin git@bitbucket.org:bitbucket/example1.git&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;git clone git@bitbucket.org:bitbucket/example2.git&quot;</span><span class="p">,</span> <span class="s2">&quot;git remote add origin git@github.com:github/example2.git&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;git clone git@bitbucket.org:bitbucket/example3.git&quot;</span><span class="p">,</span> <span class="s2">&quot;git remote add origin git@github.com:github/example3.git&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;git clone git@github.com:github/example4.git&quot;</span><span class="p">,</span> <span class="s2">&quot;git remote add origin git@bitbucket.org:bitbucket/example4.git&quot;</span><span class="o">]</span><span class="p">,</span>   
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;git clone git@bitbucket.org:bitbucket/example5.git&quot;</span><span class="p">,</span> <span class="s2">&quot;git remote add origin git@github.com:github/example5.git&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;git clone git@github.com:github/example6.git&quot;</span><span class="p">,</span> <span class="s2">&quot;git remote add origin git@bitbucket.org:bitbucket/example6.git&quot;</span><span class="o">]</span>
 </span><span class='line'><span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">repo_list</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">repo</span><span class="o">|</span>
-</span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">directoryname</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'>      <span class="nb">system</span> <span class="n">repo</span>  
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Genel olarak kodumuz bu şekildedir.</p>
 
-<h1>Taşıyacağımız alandaki (Github || Bitbucket) remoteların listelenmesi</h1>
+<h1>Var olan repositorylerimize &lsquo;mirror&rsquo; eklenmesi ve klasör içine klonlama işlemi</h1>
 
-<p>Nasıl klonlayacağımız repolarımızı listeleme işlemi yaptıysak aynı şekilde taşınacağı yerdede oluşturduğumuz repositoryleri aynı sırayla listemize ekliyoruz. (isimlerin aynı olma zorunluluğu yok)</p>
+<p>Bu aşamada &lsquo;mirror&rsquo; işlemi bize, yeni alana taşıyacağımız repositorylerimizin tüm branchleri ile taşımıza yardımcı olacak olan büyülü bir kelime.(Bende yeni öğrendim ve kullanıyorum :D)</p>
 
-<pre><code>repo_list = 
-["git clone git@github.com:github/example1.git",
-"git clone git@bitbucket.org:bitbucket/example2.git"]
+<p>Bunun kullanılma şekli klon aşamasında kodumuz şu şekilde olmalı,</p>
 
-remote_list = 
-["git remote add origin git@bitbucket.org:bitbucket/example1.git",
-"git remote add origin git@github.com:github/example2.git"]
+<pre><code>"git clone --mirror git@github.com:github/example1.git"
 </code></pre>
 
-<p>Örnek olarak görebileceğiniz gibi klonlanacak repo_list arrayinde ilk sırada github/example1 var ve karşısında taşıyacağımız yeni repo bitbucket/example1.</p>
-
-<p>Aynı şekilde sıralı olarak remote_list imizi oluşturuyoruz.</p>
+<p>fakat ben kullanıcının bunu yazarak zaman kaybetmesini istemediğim için kullanıcı sadece clone repoyu ve remote repoyu yazacak gerisini biz halledeceğiz.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -182,15 +153,34 @@ remote_list =
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">remote_list</span> <span class="o">=</span>
-</span><span class='line'><span class="o">[</span><span class="s2">&quot;git remote add origin git@bitbucket.org:bitbucket/example1.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git remote add origin git@github.com:github/example2.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git remote add origin git@github.com:github/example3.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git remote add origin git@bitbucket.org:bitbucket/example4.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git remote add origin git@github.com:github/example5.git&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;git remote add origin git@bitbucket.org:bitbucket/example6.git&quot;</span>
-</span><span class='line'><span class="o">]</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">repo_count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">repo_remote_list</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">repo</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">repo_first</span> <span class="o">=</span> <span class="n">repo</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot; --mirror &quot;</span>
+</span><span class='line'>  <span class="n">repo_last</span>  <span class="o">=</span> <span class="n">repo</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">last</span>
+</span><span class='line'>  <span class="n">repo_remote_list</span><span class="o">[</span><span class="n">repo_count</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">repo_first</span> <span class="o">+</span> <span class="n">repo_last</span>
+</span><span class='line'>  <span class="n">repo_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onun içinde bu şekilde bir kod yazıyoruz. Bu &lsquo;rpartition(&rsquo; &lsquo;) kodu,</p>
+
+<pre><code>'git clone'  
+'git@github.com:github/example1.git' 
+</code></pre>
+
+<p>şeklinde klonalanacak olan repomuzu ikiye bölüyor. Bizim ise ilk bölümün yanına &ldquo; &ndash;mirror &rdquo; büyülü sözcüğünü eklemek. Bu işlemide yaparak repo_remote_list imizi yenilemiş oluyoruz. Şimdide klonlayalım.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">repo_remote_list</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">repo</span><span class="o">|</span>
+</span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">directoryname</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>      <span class="nb">system</span> <span class="n">repo</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> 
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -205,7 +195,7 @@ remote_list =
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>&lsquo;Dir&rsquo; glob belirttiğimiz path içerisindeki dosyaları listeliyor bize. Fakat listeleme tarzı &lsquo;bitbucket/example1&rsquo; şeklinde olduğu için tek tek içerisini gezme açısında güzel, ayrıca bize sadece dosya adı olan &lsquo;example1&rsquo; de lazım olduğundan neden iki tane kullanıyoruz diye düşünebilirsiniz, sıra onda :)</p>
+<p>&lsquo;Dir&rsquo; glob belirttiğimiz path içerisindeki dosyaları listeliyor bize. Fakat listeleme tarzı &lsquo;direcktoryname/filename&rsquo; bizde => &lsquo;bitbucketproject/example1&rsquo; şeklinde olduğu için tek tek içerisini gezme açısında güzel, ayrıca bize sadece dosya adı olan &lsquo;example1&rsquo; de lazım olduğundan neden iki tane kullanıyoruz diye düşünebilirsiniz, sıra onda :)</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -216,13 +206,13 @@ remote_list =
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Bu kod sayesinde files_change içerisinde sadece klasör isimlerini tutuyoruz. Yaptığı işlem ise &lsquo;bitbucket/example1&rsquo; şeklinde olan listedeki verilerin önünden &lsquo;bitbucket/&rsquo; ı siliyor ve bize sadece klasör isimlerini bırakıyor.</p>
+<p>Bu kod sayesinde files_change içerisinde sadece klasör isimlerini tutuyoruz. Yaptığı işlem ise &lsquo;bitbucketproject/example1&rsquo; şeklinde olan listedeki verilerin önünden &lsquo;bitbucketproject/&rsquo; ı siliyor ve bize sadece klasör isimlerini bırakıyor.</p>
 
 <h1>Yeni bir remote listesi oluşturma zorunluluğu</h1>
 
 <p>Genel olarak tekli ve ikili olarak test ettiğim bu scriptte çoğul bir deneme yaptığımda klonlanan reponun klasör isminin baş harfine göre bir sapma yaşanıyor ve klonlanan repo başka bir repoya pushlanabiliyordu.</p>
 
-<p>Fakat merak etmeyin kullanıcı sadece repo_list ve remote_list i sırayla girdikten sonra başka bir işlem yapmasına gerek kalmadan biz sıralamayı kodla halledeceğiz.</p>
+<p>Fakat merak etmeyin kullanıcı sadece repo_remote_list i sırayla girdikten sonra başka bir işlem yapmasına gerek kalmadan biz sıralamayı kodla halledeceğiz.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -234,26 +224,20 @@ remote_list =
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">new_remote_list</span> <span class="o">=</span> <span class="nb">Array</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">order_count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'><span class="n">repo_count</span> <span class="o">=</span> <span class="mi">0</span>  
-</span><span class='line'><span class="n">files_change</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">fileschange</span><span class="o">|</span>   
-</span><span class='line'>  <span class="n">repo_list</span><span class="o">.</span><span class="n">each</span>  <span class="k">do</span> <span class="o">|</span><span class="n">repolist</span><span class="o">|</span>
-</span><span class='line'>      <span class="k">if</span> <span class="n">repolist</span><span class="o">.</span><span class="n">include?</span> <span class="n">fileschange</span>
-</span><span class='line'>          <span class="n">new_remote_list</span><span class="o">[</span><span class="n">repo_count</span><span class="o">]</span> <span class="o">=</span> <span class="n">remote_list</span><span class="o">[</span><span class="n">order_count</span><span class="o">]</span>
-</span><span class='line'>          <span class="n">repo_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">new_repo_remote_list</span> <span class="o">=</span> <span class="nb">Array</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">new_repo_count</span> <span class="o">=</span> <span class="mi">0</span>  
+</span><span class='line'><span class="n">files_change</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">fileschange</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">repo_remote_list</span><span class="o">.</span><span class="n">each</span>  <span class="k">do</span> <span class="o">|</span><span class="n">repolist</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">repolist</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">include?</span> <span class="n">fileschange</span>
+</span><span class='line'>          <span class="n">new_repo_remote_list</span><span class="o">[</span><span class="n">new_repo_count</span><span class="o">]</span> <span class="o">=</span>  <span class="n">repolist</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+</span><span class='line'>          <span class="n">new_repo_count</span> <span class="o">+=</span> <span class="mi">1</span>
 </span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>      <span class="n">order_count</span> <span class="o">+=</span> <span class="mi">1</span>
 </span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>  <span class="n">order_count</span><span class="o">=</span><span class="mi">0</span> 
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Kodumuz bu şekilde. Nasıl çalıştığına gelirsek. files_change bizim &lsquo;example1&rsquo; şeklinde tuttuğumuz klonlanan repolarımızın dosya adı listesi. Ve files_change klasörlerimizi okuduğu sıralamayla bize dosya adı listesi yaratıyor. Bu önemli!! repo_list en başta anlattığım  klonlanacak olan repolarımızın sıralı listesi.</p>
+<p>Kodumuz bu şekilde. Nasıl çalıştığına gelirsek. files_change bizim &lsquo;example1&rsquo; şeklinde tuttuğumuz klonlanan repolarımızın dosya adı listesi. Ve files_change klasörlerimizi okuduğu sıralamayla bize dosya adı listesi yaratıyor. Bu önemli!! repo_remote_list &lsquo;repolist[0]&rsquo; klonlanacak olan repolarımızın sıralı listesi.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -272,18 +256,20 @@ remote_list =
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">files_change</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">fileschange</span><span class="o">|</span>  
-</span><span class='line'>  <span class="n">repo_list</span><span class="o">.</span><span class="n">each</span>  <span class="k">do</span> <span class="o">|</span><span class="n">repolist</span><span class="o">|</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">files_change</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">fileschange</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">repo_remote_list</span><span class="o">.</span><span class="n">each</span>  <span class="k">do</span> <span class="o">|</span><span class="n">repolist</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">repolist</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">include?</span> <span class="n">fileschange</span>
 </span><span class='line'>      
+</span><span class='line'>      <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>  <span class="n">order_count</span><span class="o">=</span><span class="mi">0</span> 
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>repo_list te ise ilk sırada klonlamak istediğimiz sırada girdiğimiz repository listemiz ve bunları gezeceğiz. Neden mi? Çünkü bu sıra bizim taşıyacağımız yer için kullacağımız remote_list ile aynı olan sıra ve ilk başta dediğim gibi taşıyacağınız yerin repository adı aynı olmak zorunda değil.</p>
+<p>repolist[0]  ise ilk sırada klonlamak istediğimiz sırada girdiğimiz repository listemiz ve bunları gezeceğiz. Neden mi? Çünkü bu sıra bizim taşıyacağımız yer için kullacağımız &lsquo;remote&rsquo; lar ile aynı olan sıra ve taşıyacağınız yerin repository adı aynı olmak zorunda değil.</p>
 
-<p>repo_list in ilk sırasında &ldquo;github/example1.git&rdquo; var bu klonladığımız repository. Klasörümüzün adı ise example1 , remote_list imizde ise ilk sırada &ldquo;bitbucket/example1.git&rdquo; var buda yeni göndereceğimiz repository.</p>
+<p>repolist[0] in ilk sırasında &ldquo;github/example1.git&rdquo; var bu klonladığımız repository. Klasörümüzün adı ise example1 , repolist[1] imizde ise ilk sırada &ldquo;bitbucket/example1.git&rdquo; var buda yeni göndereceğimiz repository.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -292,17 +278,19 @@ remote_list =
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">repo_list</span><span class="o">.</span><span class="n">each</span>  <span class="k">do</span> <span class="o">|</span><span class="n">repolist</span><span class="o">|</span>
-</span><span class='line'>      <span class="k">if</span> <span class="n">repolist</span><span class="o">.</span><span class="n">include?</span> <span class="n">fileschange</span>
-</span><span class='line'>          <span class="n">new_remote_list</span><span class="o">[</span><span class="n">repo_count</span><span class="o">]</span> <span class="o">=</span> <span class="n">remote_list</span><span class="o">[</span><span class="n">order_count</span><span class="o">]</span>
-</span><span class='line'>          <span class="n">repo_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">files_change</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">fileschange</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">repo_remote_list</span><span class="o">.</span><span class="n">each</span>  <span class="k">do</span> <span class="o">|</span><span class="n">repolist</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">repolist</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">include?</span> <span class="n">fileschange</span>
+</span><span class='line'>          <span class="n">new_repo_remote_list</span><span class="o">[</span><span class="n">new_repo_count</span><span class="o">]</span> <span class="o">=</span>  <span class="n">repolist</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+</span><span class='line'>          <span class="n">new_repo_count</span> <span class="o">+=</span> <span class="mi">1</span>
 </span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>      <span class="n">order_count</span> <span class="o">+=</span> <span class="mi">1</span>
 </span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Belirttiğim gibi klon aşamasında klasör isimlerine göre sıralama değişiyor. if koşulu -> repo_list in ilk sırasındaki veride &ldquo;files_change&rdquo; klasör adı geçiyormu diye bakıyoruz. Eğer geçiyorsa new_remote_list[0] dan başlayarak eşleşmeleri içerisine ekle.</p>
+<p>Belirttiğim gibi klon aşamasında klasör isimlerine göre sıralama değişiyor. if koşulu -> repolist[0] in ilk sırasındaki veride &ldquo;files_change&rdquo; klasör adı geçiyormu diye bakıyoruz. Eğer geçiyorsa new_repo_remote_list[new_repo_count] dan başlayarak eşleşmeleri içerisine ekle.</p>
 
 <p>Ve sonunda new_remote_list olarak adlandırdığımız okunan klasör sırasına göre yeni bir remote listemiz oluştu.</p>
 
@@ -319,13 +307,13 @@ fileschange = "example1"
 
 <h1>Yeni remote ları repolarımıza ekleyelim</h1>
 
-<p>Bir projelerimizi commitleri ve eğer master - develop brachleri varsa o şekilde pushlayacağız. Klonlanan projelerin &lsquo;origin remote&rsquo; ları klonlanan yer neresi ise orası kalıyor. Biz onuda silmeden origin_two isminde yeni bir remote ekleyeceğiz.</p>
+<p>Biz projelerimizi tüm commitleri ve varsa tüm brachleri ile pushlamayı istiyoruz. Klonlanan projelerin &lsquo;origin remote&rsquo; ları klonlanan yer neresi ise orası kalıyor. Biz onuda silmeden origin_two isminde yeni bir remote ekleyeceğiz.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">new_remote_list</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_remote</span><span class="o">|</span>    
-</span><span class='line'>  <span class="n">new_remote</span><span class="o">.</span><span class="n">gsub!</span> <span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="s1">&#39;origin_two&#39;</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">new_repo_remote_list</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_remote</span><span class="o">|</span>   
+</span><span class='line'>  <span class="n">new_remote</span><span class="o">.</span><span class="n">gsub!</span> <span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="s1">&#39;origin_two&#39;</span> 
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -345,7 +333,7 @@ fileschange = "example1"
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">remote_count</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span class='line'><span class="n">files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
 </span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">do</span>            
-</span><span class='line'>      <span class="n">remote</span> <span class="o">=</span> <span class="n">new_remote_list</span><span class="o">[</span><span class="n">remote_count</span><span class="o">]</span>                        
+</span><span class='line'>      <span class="n">remote</span> <span class="o">=</span> <span class="n">new_repo_remote_list</span><span class="o">[</span><span class="n">remote_count</span><span class="o">]</span>                       
 </span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git remote -v&#39;</span>
 </span><span class='line'>      <span class="nb">system</span> <span class="n">remote</span>
 </span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git remote -v&#39;</span>                  
@@ -355,9 +343,9 @@ fileschange = "example1"
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Bu kodda tek tek dosyalarımıza girerek &lsquo;git remote add origin_wo &rsquo; kodunu çalıştıracak. &lsquo;git remote -v&rsquo; ise eklenmeden önceki ve sonraki halini ekrana basacak.</p>
+<p>Bu kodda tek tek dosyalarımıza girerek &lsquo;git remote add origin_two &rsquo; kodunu çalıştıracak. &lsquo;git remote -v&rsquo; ise eklenmeden önceki ve sonraki halini ekrana basacak.</p>
 
-<h1>Yeni repomuza pushluyoruz ve origin_two remoteunu siliyoruz</h1>
+<h1>Yeni repomuza pushluyoruz ve origin_two remote unu siliyoruz</h1>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -374,26 +362,16 @@ fileschange = "example1"
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
-</span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git checkout master&#39;</span>
-</span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git branch -a&#39;</span>              
-</span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git push origin_two master&#39;</span>
-</span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git checkout develop&#39;</span>
-</span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git branch -a&#39;</span>
-</span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git push origin_two develop&#39;</span>                
+</span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">do</span>            
+</span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git push --all origin_two&#39;</span>              
 </span><span class='line'>  <span class="k">end</span>      
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">remote_remove</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span class='line'><span class="n">files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
 </span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">remote</span> <span class="o">=</span> <span class="n">remote_list</span><span class="o">[</span><span class="n">remote_remove</span><span class="o">]</span>
+</span><span class='line'>      <span class="n">remote</span> <span class="o">=</span> <span class="n">new_repo_remote_list</span><span class="o">[</span><span class="n">remote_remove</span><span class="o">]</span>
 </span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git remote -v&#39;</span>
 </span><span class='line'>      <span class="nb">system</span> <span class="s1">&#39;git remote remove origin_two&#39;</span>   
 </span><span class='line'>  <span class="k">end</span>
@@ -402,13 +380,13 @@ fileschange = "example1"
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Bu kodda ilk döngüde öncelikle master branche geçiyoruz. Ve yeni remote umuza &lsquo;origin_two&rsquo; ya masterı pushluyoruz. Sonrasında develop branch için aynı işlemi uyguluyoruz.</p>
+<p>Bu kodda ilk döngüde o anda var olan tüm branchleri pushluyoruz.</p>
 
 <p>İkinci döngüde ise &lsquo;git remote remove&rsquo; ile origin_two remoteumuzu kaldırıyoruz. Aslında kaldırmamızı gerektiren bir durum yok isterseniz kaldırmaya bilirsiniz.</p>
 
 <p>Elimden geldiğince açıklamaları ile anlatmaya çalıştım. Yazı biraz fazla uzun oldu başlık gibi :D Okuduğunuz için teşekkürler.</p>
 
-<p>Tam koda <a href="https://gist.github.com/esrefv/a624c50c190ed649034a3626d1056f76">buradan</a> ulaşabilirsiniz.</p>
+<p>Tam koda <a href="https://gist.github.com/esrefv">buradan</a> ulaşabilirsiniz adı ise &ldquo;reposync.rb&rdquo; direk kodun sayfasını veremiyorum çünkü istenen bir değişiklik yada güncelleme olduğunda burada sayfayı güncellemem gerekiyor bu şekilde daha kolay ulaşabilirsiniz. İyi günler.</p>
 </div>
 
 <div class="meta">
